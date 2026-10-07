@@ -15,6 +15,12 @@ dependencies = [
     "httpx>=0.28.1",
 ]
 
+[tool.fastapi]
+app = "app.main:app"
+
+[tool.setuptools]
+packages = ["app"]
+
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
