@@ -2,6 +2,8 @@
 .env
 .env.local
 *.local
+backups/
+/review_intelligence.db
 
 # Python
 __pycache__/
