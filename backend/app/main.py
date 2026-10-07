@@ -165,8 +165,16 @@ def chat(body:dict, db:Session=Depends(get_db)):
     res = process_assistant_query(db=db, product_id=int(product_id), question=question)
     return {"answer": res.get("answer", "")}
 
-_frontend_dist = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist"))
-if os.path.exists(_frontend_dist):
+# Determine built frontend dist location for FastAPI Cloud and production serving
+_candidates = [
+    os.getenv("FRONTEND_DIST"),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dist")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "static")),
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "dist")),
+]
+_frontend_dist = next((c for c in _candidates if c and os.path.isdir(c) and os.path.isfile(os.path.join(c, "index.html"))), None)
+
+if _frontend_dist:
     _assets_dir = os.path.join(_frontend_dist, "assets")
     if os.path.exists(_assets_dir):
         app.mount("/assets", StaticFiles(directory=_assets_dir), name="assets")
@@ -179,5 +187,6 @@ if os.path.exists(_frontend_dist):
         if full_path and os.path.isfile(file_path):
             return FileResponse(file_path)
         return FileResponse(os.path.join(_frontend_dist, "index.html"))
+
 
 

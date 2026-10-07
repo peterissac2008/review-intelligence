@@ -1,0 +1,20 @@
+[project]
+name = "review-intelligence"
+version = "1.0.0"
+description = "Customer Review Intelligence & AI Analytics Platform"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.6",
+    "uvicorn[standard]>=0.34.0",
+    "sqlalchemy>=2.0.36",
+    "pydantic>=2.10.3",
+    "python-multipart>=0.0.20",
+    "pandas>=2.2.3",
+    "numpy>=2.2.0",
+    "scikit-learn>=1.6.0",
+    "httpx>=0.28.1",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
